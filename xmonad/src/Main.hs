@@ -1,6 +1,7 @@
 module Main where
 
 import Control.Monad ( (<=<) )
+import Control.Concurrent ( threadDelay )
 import Data.Functor ( (<&>) )
 import Graphics.X11.ExtraTypes.XF86
 import System.Directory ( getAppUserDataDirectory, doesFileExist, getHomeDirectory )
@@ -85,6 +86,7 @@ myKeys _ bin localBin XConfig { terminal = t } = M.fromList $
 bars :: XConfig l -> IO (XConfig l)
 bars conf = do
   h <- spawnPipe "statusbar run -f"
+  threadDelay 1000000
   return $ docks $ conf { logHook = logHook conf >> dynamicLogWithPP pp { ppOutput = hPutStrLn h } }
     where pp = def { ppCurrent         = dzenColor "#ebac54" "#1B1D1E"
                    , ppVisible         = dzenColor "white" "#1B1D1E"
