@@ -1,0 +1,31 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           my-xmonad
+version:        0.2.0.0
+build-type:     Simple
+
+executable xmonad
+  main-is: Main.hs
+  other-modules:
+      Paths_my_xmonad
+  hs-source-dirs:
+      src
+  default-extensions:
+      OverloadedStrings
+      FlexibleContexts
+      ScopedTypeVariables
+      LambdaCase
+  ghc-options: -Wall -Werror
+  build-depends:
+      X11 >=1.10.3 && <1.11
+    , base >=4.17.1.0 && <4.18
+    , containers ==0.6.7.*
+    , directory >=1.3.7.1 && <1.4
+    , filepath >=1.4.2.2 && <1.5
+    , xmonad >=0.17.2 && <1.18
+    , xmonad-contrib >=0.17.1 && <1.18
+  default-language: Haskell2010
