@@ -32,12 +32,20 @@ myWorkspaces = [ ("1", xK_1)
 
 makeWorkspaceKeys :: ButtonMask -> [(String,KeySym)] -> [((ButtonMask,KeySym), X())]
 makeWorkspaceKeys mask ws = gotoKeys ws ++ moveKeys ws
-    where gotoKeys = map (\(name, key) -> ((mask, key), windows $ W.view name))
+    where gotoKeys = map (\(name, key) -> ((mask, key), windows $ W.greedyView name))
           moveKeys = map (\(name, key) -> ((mask .|. shiftMask, key), windows $ W.shift name))
+
+makeScreenKeys :: KeyMask -> [((KeyMask, KeySym), X ())]
+makeScreenKeys mask =
+  [ ((m .|. mask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  | (key, sc) <- [ (xK_h, 0), (xK_l, 1) ]
+  , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myKeys :: FilePath -> FilePath -> FilePath
        -> XConfig l -> M.Map (ButtonMask, KeySym) (X ())
-myKeys _ bin localBin XConfig { terminal = t } = M.fromList $ makeWorkspaceKeys mod4Mask myWorkspaces ++
+myKeys _ bin localBin XConfig { terminal = t } = M.fromList $
+  makeWorkspaceKeys mod4Mask myWorkspaces ++
+  makeScreenKeys mod4Mask ++
   [ ((mod1Mask .|. shiftMask, xK_Return), spawn t)
   , ((mod1Mask, xK_p), spawn "dmenu_run")
   , ((mod1Mask, xK_k), spawn "k")
@@ -57,7 +65,6 @@ myKeys _ bin localBin XConfig { terminal = t } = M.fromList $ makeWorkspaceKeys 
   , ((mod4Mask, xK_b), sendMessage ToggleStruts)
   , ((mod4Mask, xK_comma), sendMessage (IncMasterN 1))
   , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
-  , ((mod4Mask, xK_d), spawn "docs")
   , ((0, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +1")
   , ((0, xF86XK_MonBrightnessDown), spawn $ bin </> "brightness -1")
   , ((shiftMask, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +5")
