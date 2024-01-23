@@ -76,11 +76,11 @@ myKeys _ bin localBin XConfig { terminal = t } = M.fromList $
   , ((shiftMask, xF86XK_AudioLowerVolume), spawn $ bin </> "volume -5")
   , ((0, xF86XK_AudioMute), spawn $ bin </> "volume m")
   , ((0, xF86XK_Display), spawn $ localBin </> "displayswitcheroo")
-  , ((0, xF86XK_WebCam), spawn $ bin </> "bt")
+  , ((0, xF86XK_Tools), spawn $ bin </> "bt")
+  , ((shiftMask, xF86XK_Tools), spawn $ bin </> "bt disconnect")
   , ((0, xK_F9), spawn $ localBin </> "action trigger f9")
   , ((0, xK_F10), spawn $ localBin </> "action trigger f10")
   , ((0, xK_F11), spawn $ localBin </> "action trigger f11")
-  , ((0, xF86XK_WLAN), spawn $ bin </> "wifi-fix")
   ]
 
 bars :: XConfig l -> IO (XConfig l)
