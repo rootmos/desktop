@@ -11,7 +11,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks ( avoidStruts, docks, ToggleStruts(..) )
 import XMonad.Hooks.SetWMName ( setWMName )
 import XMonad.Layout.NoBorders ( smartBorders, noBorders )
-import XMonad.Layout.SimpleFloat ( simpleFloat )
+--import XMonad.Layout.SimpleFloat ( simpleFloat )
 import XMonad.Util.Run ( spawnPipe, hPutStrLn )
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -110,7 +110,7 @@ main = do
   xmonad <=< bars $
     def { terminal = "st"
         , workspaces = fst <$> myWorkspaces
-        , layoutHook = avoidStruts $ smartBorders (Tall 1 (2/100) (1/2)) ||| noBorders Full ||| simpleFloat
+        , layoutHook = avoidStruts $ smartBorders (Tall 1 (2/100) (1/2)) ||| noBorders Full -- ||| simpleFloat
         , startupHook = composeAll [ setWMName "LG3D"
                                    ] <+> startupHook def
         , manageHook = composeAll [ className =? "scidDialog" --> doFloat
