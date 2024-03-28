@@ -2,9 +2,9 @@ module Main where
 
 import Control.Monad ( (<=<) )
 import Control.Concurrent ( threadDelay )
-import Data.Functor ( (<&>) )
 import Graphics.X11.ExtraTypes.XF86
-import System.Directory ( getAppUserDataDirectory, doesFileExist, getHomeDirectory )
+import System.Directory ( doesFileExist, getHomeDirectory )
+import System.Directory ( getXdgDirectory, XdgDirectory(XdgState) )
 import System.FilePath.Posix ( (</>) )
 import XMonad
 import XMonad.Hooks.DynamicLog
@@ -13,6 +13,7 @@ import XMonad.Hooks.SetWMName ( setWMName )
 import XMonad.Layout.NoBorders ( smartBorders, noBorders )
 --import XMonad.Layout.SimpleFloat ( simpleFloat )
 import XMonad.Util.Run ( spawnPipe, hPutStrLn )
+import XMonad.Util.Paste ( sendKey )
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -44,7 +45,7 @@ makeScreenKeys mask =
 
 myKeys :: FilePath -> FilePath -> FilePath
        -> XConfig l -> M.Map (ButtonMask, KeySym) (X ())
-myKeys _ bin localBin XConfig { terminal = t } = M.fromList $
+myKeys xdgState bin localBin XConfig { terminal = t } = M.fromList $
   makeWorkspaceKeys mod4Mask myWorkspaces ++
   makeScreenKeys mod4Mask ++
   [ ((mod1Mask .|. shiftMask, xK_Return), spawn t)
@@ -78,10 +79,16 @@ myKeys _ bin localBin XConfig { terminal = t } = M.fromList $
   , ((0, xF86XK_Display), spawn $ localBin </> "displayswitcheroo")
   , ((0, xF86XK_Tools), spawn $ bin </> "bt")
   , ((shiftMask, xF86XK_Tools), spawn $ bin </> "bt disconnect")
-  , ((0, xK_F9), spawn $ localBin </> "action trigger f9")
-  , ((0, xK_F10), spawn $ localBin </> "action trigger f10")
-  , ((0, xK_F11), spawn $ localBin </> "action trigger f11")
+  , toggleable (0, xK_F9)  (spawn $ localBin </> "action trigger f9")
+  , toggleable (0, xK_F10) (spawn $ localBin </> "action trigger f10")
+  , toggleable (0, xK_F11) (spawn $ localBin </> "action trigger f11")
+  , toggleable (0, xK_F12) (spawn $ localBin </> "action trigger f12")
   ]
+    where toggle = xdgState </> "actions.fallthrough"
+          toggleable (km, ks) m = (,) (km, ks) $ do
+            (liftIO $ doesFileExist toggle) >>= \case
+              True -> sendKey km ks
+              False -> m
 
 bars :: XConfig l -> IO (XConfig l)
 bars conf = do
@@ -103,9 +110,9 @@ main :: IO ()
 main = do
   home <- getHomeDirectory
   let (bin, localBin) = (home </> "bin", home </> ".local" </> "bin")
-  bw <- getAppUserDataDirectory "xmonad" <&> (\x -> x </> "border-width") >>= \fn ->
-    doesFileExist fn >>= \case
-      False -> return 2
+  xdgState <- getXdgDirectory XdgState "xmonad"
+  bw <- let fn = xdgState </> "border-width" in doesFileExist fn >>= \case
+      False -> return 0
       True -> read <$> readFile fn
   xmonad <=< bars $
     def { terminal = "st"
@@ -115,7 +122,7 @@ main = do
                                    ] <+> startupHook def
         , manageHook = composeAll [ className =? "scidDialog" --> doFloat
                                   ] <+> manageHook def
-        , keys = myKeys home bin localBin
+        , keys = myKeys xdgState bin localBin
         , focusFollowsMouse = False
         , focusedBorderColor = "red"
         , borderWidth = bw
