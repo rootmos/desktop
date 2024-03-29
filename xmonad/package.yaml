@@ -9,6 +9,7 @@ dependencies:
   - filepath >= 1.4.2.2 && < 1.5
   - xmonad >= 0.17.2 && < 0.18
   - xmonad-contrib >= 0.17.1 && < 0.18
+  - process >= 1.6.16.0 && < 1.7
 
 ghc-options: -Wall -Werror
 
@@ -19,6 +20,6 @@ default-extensions:
   - LambdaCase
 
 executables:
-  xmonad:
+  xmonad-x86_64-linux:
     source-dirs: src
     main: Main.hs
