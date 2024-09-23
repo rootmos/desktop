@@ -1,0 +1,11 @@
+[Unit]
+Description=countdown notifications
+
+[Service]
+Restart=always
+RestartSec=5
+ExecStartPre=/bin/systemctl --user import-environment DISPLAY XAUTHORITY
+ExecStart=/home/gustav/bin/countdown notify
+
+[Install]
+WantedBy=default.target
