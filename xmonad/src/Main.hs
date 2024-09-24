@@ -98,6 +98,7 @@ makeKeys bin localBin = do
     , ((mod4Mask, xK_b), sendMessage ToggleStruts)
     , ((mod4Mask, xK_comma), sendMessage (IncMasterN 1))
     , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
+    , ((controlMask, xK_space), spawn "dunstctl close")
     , ((0, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +5")
     , ((0, xF86XK_MonBrightnessDown), spawn $ bin </> "brightness -5")
     , ((shiftMask, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +1")
