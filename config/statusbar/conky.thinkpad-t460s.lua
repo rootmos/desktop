@@ -1,6 +1,6 @@
 local template = [[
 ^fg(\#aaaaaa)↓${downspeedf IFACE}^fg(\#FFFFFF) ^fg(\#aaaaaa)↑${upspeedf IFACE}^fg(\#FFFFFF) \
-| ^fg(\#aaaaaa)${exec countdown}^fg(\#FFFFFF) \
+| ^fg(\#aaaaaa)${exec env BAR_WIDTH=30 countdown show}^fg(\#FFFFFF) \
 | ^fg(\#aaaaaa)${exec monitor-client ping avg}ms ${exec monitor-client ping loss}% ${exec monitor-client location}^fg(\#FFFFFF) \
 | ^fg(\#aaaaaa)/ ${exec monitor-client fs available /}^fg(\#FFFFFF) \
 ^fg(\#aaaaaa)/tmp ${exec monitor-client fs usage /tmp}%^fg(\#FFFFFF) \
