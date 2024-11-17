@@ -4,3 +4,6 @@
 [submodule "st"]
 	path = st
 	url = https://git.sr.ht/~rootmos/st
+[submodule "dvorak"]
+	path = dvorak
+	url = https://github.com/rootmos/dvorak
