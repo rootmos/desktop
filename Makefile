@@ -7,6 +7,7 @@ install:
 	make -C dvorak install
 	make -C xhook install
 	make -C action/c-impl install
+	make -C displayswitcheroo install
 
 .PHONY: deps
 deps:

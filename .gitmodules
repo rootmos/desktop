@@ -13,3 +13,6 @@
 [submodule "action"]
 	path = action
 	url = https://git.sr.ht/~rootmos/action
+[submodule "displayswitcheroo"]
+	path = displayswitcheroo
+	url = https://github.com/rootmos/displayswitcheroo
