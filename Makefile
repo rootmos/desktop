@@ -9,4 +9,6 @@ install:
 deps:
 	pacman -S --needed --noconfirm \
 		libx11 libxss libxft libxrandr \
-		python-pipx
+		python-pipx \
+		dzen2 conky dmenu \
+		ttf-cascadia-code
