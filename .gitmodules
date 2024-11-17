@@ -10,3 +10,6 @@
 [submodule "xhook"]
 	path = xhook
 	url = https://github.com/rootmos/xhook
+[submodule "action"]
+	path = action
+	url = https://git.sr.ht/~rootmos/action

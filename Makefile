@@ -6,6 +6,7 @@ install:
 	make -C statusbar install
 	make -C dvorak install
 	make -C xhook install
+	make -C action/c-impl install
 
 .PHONY: deps
 deps:
