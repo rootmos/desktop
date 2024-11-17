@@ -1,5 +1,5 @@
 PACKAGE_YAML = package.yaml
-NAME ?= my-xmonad.yaml
+NAME ?= my-xmonad
 CABAL = $(NAME).cabal
 STACK ?= stack
 
