@@ -8,5 +8,5 @@ install:
 .PHONY: deps
 deps:
 	pacman -S --needed --noconfirm \
-		libx11 libxss libxft \
+		libx11 libxss libxft libxrandr \
 		python-pipx
