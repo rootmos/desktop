@@ -1,3 +1,6 @@
 [submodule "statusbar"]
 	path = statusbar
 	url = https://git.sr.ht/~rootmos/statusbar
+[submodule "st"]
+	path = st
+	url = https://git.sr.ht/~rootmos/st
