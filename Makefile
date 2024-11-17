@@ -5,6 +5,7 @@ install:
 	make -C st install DESTDIR="$(HOME)/.local" PREFIX=
 	make -C statusbar install
 	make -C dvorak install
+	make -C xhook install
 
 .PHONY: deps
 deps:

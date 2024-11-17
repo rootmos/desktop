@@ -7,3 +7,6 @@
 [submodule "dvorak"]
 	path = dvorak
 	url = https://github.com/rootmos/dvorak
+[submodule "xhook"]
+	path = xhook
+	url = https://github.com/rootmos/xhook
