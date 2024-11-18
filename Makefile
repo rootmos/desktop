@@ -8,6 +8,7 @@ install:
 	make -C xhook install
 	make -C action/c-impl install
 	make -C displayswitcheroo install
+	make -C monitor install
 
 .PHONY: deps
 deps:
@@ -16,4 +17,5 @@ deps:
 		python-pipx \
 		dzen2 conky dmenu \
 		ttf-cascadia-code \
-		xorg-xkbcomp xorg-setxkbmap
+		xorg-xkbcomp xorg-setxkbmap \
+		opam socat

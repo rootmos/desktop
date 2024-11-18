@@ -16,3 +16,7 @@
 [submodule "displayswitcheroo"]
 	path = displayswitcheroo
 	url = https://github.com/rootmos/displayswitcheroo
+[submodule "monitor"]
+	path = monitor
+	url = https://github.com/rootmos/monitor
+	branch = buildml
