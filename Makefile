@@ -8,7 +8,7 @@ install:
 	make -C xhook install
 	make -C action/c-impl install
 	make -C displayswitcheroo install
-	make -C monitor install
+	make -C monitor install SUDO=sudo
 
 .PHONY: deps
 deps:

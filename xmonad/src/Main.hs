@@ -74,6 +74,7 @@ makeKeys bin localBin = do
                                  , makeActionKey (0, xK_F10) "f10"
                                  , makeActionKey (0, xK_F11) "f11"
                                  , makeActionKey (0, xK_F12) "f12"
+                                 , makeActionKey (0, xF86XK_Explorer) "f12"
                                  ]
   return $ \XConfig { terminal = t } -> M.fromList $
     makeWorkspaceKeys mod4Mask myWorkspaces ++
@@ -95,6 +96,7 @@ makeKeys bin localBin = do
     , ((mod1Mask, xK_t), withFocused $ windows . W.sink)
     , ((mod1Mask, xK_period), spawn "pass-pick")
     , ((mod1Mask .|. shiftMask, xK_period), spawn "pass-pick -m")
+    , ((mod1Mask .|. shiftMask, xK_space), spawn $ bin </> "www")
     , ((mod1Mask, xK_c), spawn $ bin </> "countdown menu")
     , ((mod4Mask, xK_b), sendMessage ToggleStruts)
     , ((mod4Mask, xK_comma), sendMessage (IncMasterN 1))
@@ -111,7 +113,7 @@ makeKeys bin localBin = do
     , ((0, xF86XK_AudioMute), spawn $ bin </> "volume m")
     , ((0, xF86XK_Tools), spawn $ localBin </> "bluetooth-fix")
     , ((0, xF86XK_LaunchA), spawn $ localBin </> "displayswitcheroo flip")
-    , ((0, xF86XK_Explorer), spawn $ localBin </> "displayswitcheroo switch")
+    , ((0, xF86XK_WLAN), spawn $ bin </> "wifi-fix" )
     ]
 
 bars :: XConfig l -> IO (XConfig l)
