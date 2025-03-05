@@ -1,0 +1,11 @@
+[Unit]
+Description=bluetooth-codec-fix service
+
+[Service]
+Restart=always
+RestartSec=5
+ExecStartPre=/bin/systemctl --user import-environment DISPLAY XAUTHORITY PATH
+ExecStart=%h/bin/bluetooth-codec-fix --loop
+
+[Install]
+WantedBy=default.target
