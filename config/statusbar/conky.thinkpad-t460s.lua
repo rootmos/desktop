@@ -7,6 +7,7 @@ local template = [[
 ^fg(\#aaaaaa)/home ${exec monitor-client fs available /home}^fg(\#FFFFFF) \
 | ^fg(\#aaaaaa)C:${cpu}% T:${hwmon MON temp TEMP}° S:${swapperc}% M:${memperc}%^fg(\#FFFFFF) \
 | ^fg(\#aaaaaa)${battery_short BAT0} (${battery_time BAT0})^fg(\#FFFFFF) ^fg(\#aaaaaa)${battery_short BAT1} (${battery_time BAT1})^fg(\#FFFFFF) \
+| ^fg(\#aaaaaa)${exec chrony-current-correction}^fg(\#FFFFFF) \
 | ^fg(\#aaaaaa)${time %Y-%m-%d} ^fg(\#ebac54)${time %R}
 ]]
 
