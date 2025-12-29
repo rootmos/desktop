@@ -20,3 +20,6 @@
 	path = monitor
 	url = https://github.com/rootmos/monitor
 	branch = buildml
+[submodule "dmenu"]
+	path = dmenu
+	url = https://git.sr.ht/~rootmos/dmenu
