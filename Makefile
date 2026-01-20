@@ -10,6 +10,10 @@ install:
 	make -C displayswitcheroo install
 	make -C monitor install SUDO=sudo
 
+.PHONY: config
+config:
+	make -C config install
+
 .PHONY: deps
 deps:
 	pacman -S --needed --noconfirm \
