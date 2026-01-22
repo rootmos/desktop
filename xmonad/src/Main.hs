@@ -40,6 +40,7 @@ myWorkspaces = [ ("1", xK_1)
                , ("m", xK_m)
                , ("c", xK_c)
                , ("g", xK_g)
+               , ("t", xK_t)
                ]
 
 type Keybinding = ( (ButtonMask, KeySym), X () )
@@ -74,7 +75,7 @@ makeKeys bin localBin = do
                                  , makeActionKey (0, xK_F10) "f10"
                                  , makeActionKey (0, xK_F11) "f11"
                                  , makeActionKey (0, xK_F12) "f12"
-                                 , makeActionKey (0, xF86XK_Explorer) "f12"
+                                 , makeActionKey (0, xF86XK_Favorites) "f12"
                                  ]
   return $ \XConfig { terminal = t } -> M.fromList $
     makeWorkspaceKeys mod4Mask myWorkspaces ++
@@ -94,24 +95,34 @@ makeKeys bin localBin = do
     , ((mod1Mask, xK_h), sendMessage Shrink)
     , ((mod1Mask, xK_l), sendMessage Expand)
     , ((mod1Mask, xK_t), withFocused $ windows . W.sink)
+
     , ((mod1Mask, xK_period), spawn "pass-pick")
     , ((mod1Mask .|. shiftMask, xK_period), spawn "pass-pick -m")
+
     , ((mod1Mask .|. shiftMask, xK_space), spawn $ bin </> "www")
+
     , ((mod1Mask, xK_c), spawn $ bin </> "countdown menu")
     , ((mod4Mask, xK_b), sendMessage ToggleStruts)
+
     , ((mod4Mask, xK_comma), sendMessage (IncMasterN 1))
     , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
     , ((controlMask, xK_space), spawn "dunstctl close")
-    , ((0, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +5")
-    , ((0, xF86XK_MonBrightnessDown), spawn $ bin </> "brightness -5")
-    , ((shiftMask, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +1")
-    , ((shiftMask, xF86XK_MonBrightnessDown), spawn $ bin </> "brightness -1")
-    , ((0, xF86XK_AudioRaiseVolume), spawn $ bin </> "volume +1")
-    , ((0, xF86XK_AudioLowerVolume), spawn $ bin </> "volume -1")
-    , ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ bin </> "volume +5")
-    , ((shiftMask, xF86XK_AudioLowerVolume), spawn $ bin </> "volume -5")
-    , ((0, xF86XK_AudioMute), spawn $ bin </> "volume m")
-    , ((0, xF86XK_Tools), spawn $ localBin </> "bluetooth-fix")
+
+    , ((0, xF86XK_MonBrightnessUp), spawn $ localBin </> "brightness +5")
+    , ((0, xF86XK_MonBrightnessDown), spawn $ localBin </> "brightness -5")
+    , ((shiftMask, xF86XK_MonBrightnessUp), spawn $ localBin </> "brightness +1")
+    , ((shiftMask, xF86XK_MonBrightnessDown), spawn $ localBin </> "brightness -1")
+
+    , ((0, xF86XK_AudioRaiseVolume), spawn $ localBin </> "volume +1")
+    , ((0, xF86XK_AudioLowerVolume), spawn $ localBin </> "volume -1")
+    , ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ localBin </> "volume +5")
+    , ((shiftMask, xF86XK_AudioLowerVolume), spawn $ localBin </> "volume -5")
+    , ((0, xF86XK_AudioMute), spawn $ localBin </> "volume m")
+
+    , ((0, xK_Print), spawn $ localBin </> "bluetooth-fix connect")
+    , ((shiftMask, xK_Print), spawn $ localBin </> "bluetooth-fix disconnect")
+
+    , ((0, xF86XK_Display), spawn $ localBin </> "displayswitcheroo switch")
     , ((0, xF86XK_LaunchA), spawn $ localBin </> "displayswitcheroo flip")
     , ((0, xF86XK_WLAN), spawn $ bin </> "wifi-fix" )
     ]
