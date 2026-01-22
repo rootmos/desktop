@@ -7,13 +7,16 @@ define service
 endef
 
 .PHONY: install
-install: statusbar displayswitcheroo
+install: statusbar displayswitcheroo \
+	monitor.service bluetooth-codec-fix.service
 
 .PHONY: statusbar
 statusbar:
 	ln -svf "$(CURRENT_DIR)/statusbar" "$(HOME)/.config/statusbar"
 
 .PHONY: displayswitcheroo
-displayswitcheroo:
+displayswitcheroo: displayswitcheroo.service
 	ln -svf "$(CURRENT_DIR)/displayswitcheroo" "$(HOME)/.config/displayswitcheroo"
-	$(call service, displayswitcheroo)
+
+%.service:
+	$(call service, $*)
