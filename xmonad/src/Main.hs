@@ -82,24 +82,31 @@ makeKeys bin localBin = do
     makeScreenKeys mod4Mask ++
     as ++
     [ ((mod1Mask .|. shiftMask, xK_Return), spawn t)
+    , ((mod1Mask .|. shiftMask, xK_space), spawn $ localBin </> "www")
+
+    , ((mod1Mask, xK_g), sendKey shiftMask xK_Insert)
+    , ((mod1Mask, xK_u), sendKey shiftMask xK_Insert)
+
     , ((mod1Mask, xK_p), spawn "dmenu_run")
     , ((mod1Mask, xK_k), spawn "k")
-    , ((mod1Mask .|. shiftMask, xK_c), kill)
-    , ((mod1Mask, xK_space), sendMessage NextLayout)
-    , ((mod1Mask, xK_Tab), windows W.focusDown)
-    , ((mod1Mask .|. shiftMask, xK_Tab), windows W.focusUp )
-    , ((mod1Mask, xK_m), windows W.focusMaster )
-    , ((mod1Mask, xK_Return), windows W.swapMaster)
-    , ((mod1Mask .|. shiftMask, xK_j), windows W.swapDown )
-    , ((mod1Mask .|. shiftMask, xK_k), windows W.swapUp )
-    , ((mod1Mask, xK_h), sendMessage Shrink)
-    , ((mod1Mask, xK_l), sendMessage Expand)
-    , ((mod1Mask, xK_t), withFocused $ windows . W.sink)
-
     , ((mod1Mask, xK_period), spawn "pass-pick")
     , ((mod1Mask .|. shiftMask, xK_period), spawn "pass-pick -m")
 
-    , ((mod1Mask .|. shiftMask, xK_space), spawn $ bin </> "www")
+    , ((mod1Mask .|. shiftMask, xK_c), kill)
+    , ((mod1Mask, xK_Tab), windows W.focusDown)
+    , ((mod1Mask .|. shiftMask, xK_Tab), windows W.focusUp )
+
+    , ((mod1Mask, xK_m), windows W.focusMaster )
+    , ((mod1Mask, xK_Return), windows W.swapMaster)
+
+    , ((mod1Mask .|. shiftMask, xK_j), windows W.swapDown )
+    , ((mod1Mask .|. shiftMask, xK_k), windows W.swapUp )
+
+    , ((mod1Mask, xK_space), sendMessage NextLayout)
+    , ((mod1Mask, xK_h), sendMessage Shrink)
+    , ((mod1Mask, xK_l), sendMessage Expand)
+
+    , ((mod1Mask, xK_t), withFocused $ windows . W.sink)
 
     , ((mod1Mask, xK_c), spawn $ bin </> "countdown menu")
     , ((mod4Mask, xK_b), sendMessage ToggleStruts)
@@ -108,16 +115,16 @@ makeKeys bin localBin = do
     , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
     , ((controlMask, xK_space), spawn "dunstctl close")
 
-    , ((0, xF86XK_MonBrightnessUp), spawn $ localBin </> "brightness +5")
-    , ((0, xF86XK_MonBrightnessDown), spawn $ localBin </> "brightness -5")
-    , ((shiftMask, xF86XK_MonBrightnessUp), spawn $ localBin </> "brightness +1")
-    , ((shiftMask, xF86XK_MonBrightnessDown), spawn $ localBin </> "brightness -1")
+    , ((0, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +5")
+    , ((0, xF86XK_MonBrightnessDown), spawn $ bin </> "brightness -5")
+    , ((shiftMask, xF86XK_MonBrightnessUp), spawn $ bin </> "brightness +1")
+    , ((shiftMask, xF86XK_MonBrightnessDown), spawn $ bin </> "brightness -1")
 
-    , ((0, xF86XK_AudioRaiseVolume), spawn $ localBin </> "volume +1")
-    , ((0, xF86XK_AudioLowerVolume), spawn $ localBin </> "volume -1")
-    , ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ localBin </> "volume +5")
-    , ((shiftMask, xF86XK_AudioLowerVolume), spawn $ localBin </> "volume -5")
-    , ((0, xF86XK_AudioMute), spawn $ localBin </> "volume m")
+    , ((0, xF86XK_AudioRaiseVolume), spawn $ bin </> "volume +1")
+    , ((0, xF86XK_AudioLowerVolume), spawn $ bin </> "volume -1")
+    , ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ bin </> "volume +5")
+    , ((shiftMask, xF86XK_AudioLowerVolume), spawn $ bin </> "volume -5")
+    , ((0, xF86XK_AudioMute), spawn $ bin </> "volume m")
 
     , ((0, xK_Print), spawn $ localBin </> "bluetooth-fix connect")
     , ((shiftMask, xK_Print), spawn $ localBin </> "bluetooth-fix disconnect")
@@ -157,7 +164,7 @@ main = do
   xmonad <=< bars $
     def { terminal = "st"
         , workspaces = fst <$> myWorkspaces
-        , layoutHook = avoidStruts $ smartBorders (Tall 1 (2/100) (1/2)) ||| noBorders Full -- ||| simpleFloat
+        , layoutHook = avoidStruts $ smartBorders (Tall 1 (5/1000) (1/2)) ||| noBorders Full -- ||| simpleFloat
         , startupHook = composeAll [ setWMName "LG3D"
                                    ] <+> startupHook def
         , manageHook = composeAll [ className =? "scidDialog" --> doFloat
