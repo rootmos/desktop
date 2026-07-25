@@ -25,30 +25,33 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import Text.Printf ( printf )
 
-type Workspace = (String, KeySym)
+type Workspace = (String, [KeySym])
 
 myWorkspaces :: [ Workspace ]
-myWorkspaces = [ ("1", xK_1)
-               , ("2", xK_2)
-               , ("3", xK_parenleft)
-               , ("4", xK_dollar)
-               , ("5", xK_braceleft)
-               , ("6", xK_equal)
-               , ("p", xK_p)
-               , ("w", xK_w)
-               , ("v", xK_v)
-               , ("m", xK_m)
-               , ("c", xK_c)
-               , ("g", xK_g)
-               , ("t", xK_t)
+myWorkspaces = [ ("1", [ xK_1] )
+               , ("2", [ xK_2] )
+               , ("3", [ xK_parenleft, xK_3] )
+               , ("4", [ xK_dollar, xK_4 ] )
+               , ("5", [ xK_braceleft, xK_5 ] )
+               , ("6", [ xK_equal, xK_6 ] )
+               , ("p", [ xK_p] )
+               , ("q", [ xK_q] )
+               , ("r", [ xK_r] )
+               , ("w", [ xK_w] )
+               , ("v", [ xK_v] )
+               , ("m", [ xK_m] )
+               , ("c", [ xK_c] )
+               , ("g", [ xK_g] )
+               , ("t", [ xK_t] )
                ]
 
 type Keybinding = ( (ButtonMask, KeySym), X () )
 
 makeWorkspaceKeys :: ButtonMask -> [ Workspace ] -> [ Keybinding ]
-makeWorkspaceKeys mask ws = gotoKeys ws ++ moveKeys ws
-    where gotoKeys = map (\(name, key) -> ((mask, key), windows $ W.greedyView name))
-          moveKeys = map (\(name, key) -> ((mask .|. shiftMask, key), windows $ W.shift name))
+makeWorkspaceKeys mask ws = mk gotoKeys ++ mk moveKeys
+    where mk f = [ f (n, k) | (n, ks) <- ws, k <- ks]
+          gotoKeys = \(name, key) -> ((mask, key), windows $ W.greedyView name)
+          moveKeys = \(name, key) -> ((mask .|. shiftMask, key), windows $ W.shift name)
 
 makeScreenKeys :: ButtonMask -> [ Keybinding ]
 makeScreenKeys mask =
@@ -168,6 +171,7 @@ main = do
         , startupHook = composeAll [ setWMName "LG3D"
                                    ] <+> startupHook def
         , manageHook = composeAll [ className =? "scidDialog" --> doFloat
+                                  , className =? "dialog" --> doFloat
                                   ] <+> manageHook def
         , keys = myKeys
         , focusFollowsMouse = False
